@@ -24,5 +24,5 @@ public class SmsCouponHistoryDetail extends SmsCouponHistory {
     @ApiModelProperty("优惠券关联商品")
     private List<SmsCouponProductRelation> productRelationList;
     @ApiModelProperty("优惠券关联商品分类")
-    private List<SmsCouponProductCategoryRelation> productCategoryRelationList;
+    private List<SmsCouponProductCategoryRelation> categoryRelationList;
 }
