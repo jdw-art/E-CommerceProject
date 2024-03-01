@@ -37,7 +37,7 @@ public class UmsMemberReceiveAddressServiceImpl implements UmsMemberReceiveAddre
     public int delete(Long id) {
         UmsMember currentMember = memberService.getCurrentMember();
         UmsMemberReceiveAddressExample example = new UmsMemberReceiveAddressExample();
-        example.createCriteria().andMemberIdEqualTo(currentMember.getId());
+        example.createCriteria().andMemberIdEqualTo(currentMember.getId()).andIdEqualTo(id);
         return addressMapper.deleteByExample(example);
     }
 
@@ -57,6 +57,14 @@ public class UmsMemberReceiveAddressServiceImpl implements UmsMemberReceiveAddre
             addressMapper.updateByExampleSelective(record, updateExample);
         }
         return addressMapper.updateByExampleSelective(address, example);
+    }
+
+    @Override
+    public List<UmsMemberReceiveAddress> list() {
+        UmsMember currentMember = memberService.getCurrentMember();
+        UmsMemberReceiveAddressExample example = new UmsMemberReceiveAddressExample();
+        example.createCriteria().andMemberIdEqualTo(currentMember.getId());
+        return addressMapper.selectByExample(example);
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.macro.mall.portal.service;
 import com.macro.mall.model.UmsMemberReceiveAddress;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @Author: Jacob
  * @Description: 用户地址管理Service
@@ -31,6 +33,11 @@ public interface UmsMemberReceiveAddressService {
      */
     @Transactional
     int update(Long id, UmsMemberReceiveAddress address);
+
+    /**
+     * 返回当前用户的收货地址
+     */
+    List<UmsMemberReceiveAddress> list();
 
     /**
      * 返回当前用户的收货地址
