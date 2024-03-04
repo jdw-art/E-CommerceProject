@@ -29,5 +29,5 @@ public class MemberBrandAttention {
     private String brandName;
     private String brandLogo;
     private String brandCity;
-    private Date crateTime;
+    private Date createTime;
 }
