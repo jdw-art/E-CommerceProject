@@ -36,6 +36,7 @@ public class UmsResourceController {
     @ResponseBody
     public CommonResult create(@RequestBody UmsResource umsResource) {
         int count = resourceService.create(umsResource);
+        dynamicSecurityMetadataSource.clearDataSource();
         if (count > 0) {
             return CommonResult.success(count);
         }
