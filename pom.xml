@@ -14,6 +14,7 @@
         <module>mall-security</module>
         <module>mall-admin</module>
         <module>mall-portal</module>
+        <module>mall-search</module>
     </modules>
 
     <parent>
