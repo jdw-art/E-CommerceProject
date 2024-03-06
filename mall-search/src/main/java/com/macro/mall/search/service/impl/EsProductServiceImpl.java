@@ -166,7 +166,7 @@ public class EsProductServiceImpl implements EsProductService {
         NativeSearchQuery searchQuery = nativeSearchQueryBuilder.build();
         LOGGER.info("DSL:{}", searchQuery.getQuery().toString());
         SearchHits<EsProduct> searchHits = elasticsearchRestTemplate.search(searchQuery, EsProduct.class);
-        if (searchHits.getTotalHits() < 0) {
+        if (searchHits.getTotalHits() <= 0) {
             return new PageImpl<>(ListUtil.empty(), pageable, 0);
         }
         List<EsProduct> searchProductList = searchHits.stream().map(SearchHit::getContent).collect(Collectors.toList());
@@ -179,7 +179,7 @@ public class EsProductServiceImpl implements EsProductService {
         List<EsProduct> esProductList = productDao.getAllEsProductList(id);
         if (esProductList.size() > 0) {
             EsProduct esProduct = esProductList.get(0);
-            String keyword = esProduct.getKeywords();
+            String keyword = esProduct.getName();
             Long brandId = esProduct.getBrandId();
             Long productCategoryId = esProduct.getProductCategoryId();
             // 根据商品标题、品牌、分类进行搜索
@@ -210,7 +210,7 @@ public class EsProductServiceImpl implements EsProductService {
             NativeSearchQuery searchQuery = builder.build();
             LOGGER.info("DSL:{}", searchQuery.getQuery().toString());
             SearchHits<EsProduct> searchHits = elasticsearchRestTemplate.search(searchQuery, EsProduct.class);
-            if (searchHits.getTotalHits() < 0) {
+            if (searchHits.getTotalHits() <= 0) {
                 return new PageImpl<>(ListUtil.empty(), pageable, 0);
             }
             List<EsProduct> searchProductList = searchHits.stream().map(SearchHit::getContent).collect(Collectors.toList());
@@ -229,43 +229,48 @@ public class EsProductServiceImpl implements EsProductService {
             builder.withQuery(QueryBuilders.multiMatchQuery(keyword, "name", "subTitle", "keywords"));
         }
         // 聚合搜索品牌名称
-        builder.withAggregations(AggregationBuilders.terms("brandName").field("brandName"));
+        builder.withAggregations(AggregationBuilders.terms("brandNames").field("brandName"));
         // 聚合搜索分类名称
-        builder.withAggregations(AggregationBuilders.terms("productCategoryName").field("productCategoryName"));
+        builder.withAggregations(AggregationBuilders.terms("productCategoryNames").field("productCategoryName"));
         // 聚合搜索商品属性，去除type=0的属性
-        AbstractAggregationBuilder aggregationBuilder = AggregationBuilders.nested("attrValueList", "attrValueList")
-                .subAggregation(AggregationBuilders.filter("filter", QueryBuilders.termQuery("attrValueList.type", 1))
+        AbstractAggregationBuilder aggregationBuilder = AggregationBuilders.nested("allAttrValues", "attrValueList")
+                .subAggregation(AggregationBuilders.filter("productAttrs", QueryBuilders.termQuery("attrValueList.type", 1))
                         .subAggregation(AggregationBuilders.terms("attrIds")
                                 .field("attrValueList.productAttributeId")
                                 .subAggregation(AggregationBuilders.terms("attrValues")
                                         .field("attrValueList.value"))
-                                .subAggregation(AggregationBuilders.terms("attrName")
+                                .subAggregation(AggregationBuilders.terms("attrNames")
                                         .field("attrValueList.name"))));
         builder.withAggregations(aggregationBuilder);
         NativeSearchQuery searchQuery = builder.build();
         SearchHits<EsProduct> searchHits = elasticsearchRestTemplate.search(searchQuery, EsProduct.class);
-        return null;
+        return covertProductRelatedInfo(searchHits);
     }
 
+    /**
+     * 将返回结果转换为对象
+     * @param response
+     * @return
+     */
     private EsProductRelatedInfo covertProductRelatedInfo(SearchHits<EsProduct> response) {
         EsProductRelatedInfo productRelatedInfo = new EsProductRelatedInfo();
         Map<String, Aggregation> aggregationMap = ((Aggregations) response.getAggregations().aggregations()).asMap();
         // 设置品牌
-        Aggregation brandNames = aggregationMap.get("brandName");
+        Aggregation brandNames = aggregationMap.get("brandNames");
         List<String> brandNameList = new ArrayList<>();
         for (int i = 0; i< ((Terms) brandNames).getBuckets().size(); i++) {
             brandNameList.add(((Terms) brandNames).getBuckets().get(i).getKeyAsString());
         }
         productRelatedInfo.setBrandNames(brandNameList);
         // 设置分类
-        Aggregation productCategoryNames = aggregationMap.get("productCategoryName");
+        Aggregation productCategoryNames = aggregationMap.get("productCategoryNames");
         List<String> productCategoryNameList = new ArrayList<>();
         for (int i = 0; i< ((Terms) productCategoryNames).getBuckets().size(); i++) {
             productCategoryNameList.add(((Terms) productCategoryNames).getBuckets().get(i).getKeyAsString());
         }
         productRelatedInfo.setProductCategoryNames(productCategoryNameList);
         // 设置参数
-        Aggregation productAttrs = aggregationMap.get("attrValueList");
+        Aggregation productAttrs = aggregationMap.get("allAttrValues");
         List<? extends Terms.Bucket> attrIds = ((ParsedLongTerms) ((ParsedFilter) ((ParsedNested) productAttrs).getAggregations().get("productAttrs")).getAggregations().get("attrIds")).getBuckets();
         List<EsProductRelatedInfo.ProductAttr> attrList = new ArrayList<>();
         for (Terms.Bucket attrId : attrIds) {
