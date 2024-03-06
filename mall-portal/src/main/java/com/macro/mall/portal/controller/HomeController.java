@@ -70,7 +70,7 @@ public class HomeController {
     @ApiOperation(value = "分页获取人气推荐商品")
     @RequestMapping(value = "/hotProductList", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<PmsProduct>> hotProductList(@RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
+    public CommonResult<List<PmsProduct>> hotProductList(@RequestParam(value = "pageSize", defaultValue = "6") Integer pageSize,
                                                          @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<PmsProduct> productList = homeService.hotProductList(pageSize, pageNum);
         return CommonResult.success(productList);
@@ -79,7 +79,7 @@ public class HomeController {
     @ApiOperation(value = "分页获取新品推荐商品")
     @RequestMapping(value = "/newProductList", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<PmsProduct>> newProductList(@RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
+    public CommonResult<List<PmsProduct>> newProductList(@RequestParam(value = "pageSize", defaultValue = "6") Integer pageSize,
                                                          @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<PmsProduct> productList = homeService.newProductList(pageSize, pageNum);
         return CommonResult.success(productList);
