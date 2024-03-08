@@ -5,7 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * @Author: Jacob
- * @Description: TODO
+ * @Description: 状态约束校验器
  * @Date: 2024/2/22 11:18
  * @Version: 1.0
  */
