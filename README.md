@@ -5,6 +5,7 @@
 
 ### 组织结构
 
+
 ``` lua
 mall
 ├── mall-common -- 工具类及通用代码
