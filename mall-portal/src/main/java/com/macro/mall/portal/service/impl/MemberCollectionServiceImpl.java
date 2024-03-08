@@ -62,7 +62,7 @@ public class MemberCollectionServiceImpl implements MemberCollectionService {
     }
 
     @Override
-    public int delete(long productId) {
+    public int delete(Long productId) {
         UmsMember member = memberService.getCurrentMember();
         return productCollectionRepository.deleteByMemberIdAndProductId(member.getId(), productId);
     }

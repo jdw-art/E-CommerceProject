@@ -21,7 +21,7 @@ public interface MemberCollectionService {
     /**
      * 删除收藏
      */
-    int delete(long productId);
+    int delete(Long productId);
 
     /**
      * 分页查询收藏
