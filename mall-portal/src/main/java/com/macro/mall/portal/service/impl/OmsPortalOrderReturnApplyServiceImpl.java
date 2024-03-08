@@ -24,7 +24,7 @@ public class OmsPortalOrderReturnApplyServiceImpl implements OmsPortalOrderRetur
     @Override
     public int create(OmsOrderReturnApplyParam returnApplyParam) {
         OmsOrderReturnApply realApply = new OmsOrderReturnApply();
-        BeanUtils.copyProperties(realApply, returnApplyParam);
+        BeanUtils.copyProperties(returnApplyParam, realApply);
         realApply.setCreateTime(new Date());
         realApply.setStatus(0);
         return returnApplyMapper.insert(realApply);
