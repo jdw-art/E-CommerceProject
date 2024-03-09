@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
  * @Date: 2024/2/21 20:24
  * @Version: 1.0
  */
-@ControllerAdvice
+@Controller
 @Api(tags = "UmsAdminController")
 @Tag(name = "UmsAdminController", description = "后台用户管理")
 @RequestMapping("/admin")
@@ -75,7 +76,7 @@ public class UmsAdminController {
     @RequestMapping(value = "/refreshToken", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult refreshToken(HttpServletRequest request) {
-        String token = request.getHeader(tokenHead);
+        String token = request.getHeader(tokenHeader);
         String refreshToken = adminService.refreshToken(token);
         if (refreshToken == null) {
             return CommonResult.failed("token已经过期");
@@ -90,7 +91,7 @@ public class UmsAdminController {
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult getAdminInfo(Principal principal) {
-        if (principal == null) {
+        if(principal==null){
             return CommonResult.unauthorized(null);
         }
         String username = principal.getName();
@@ -100,9 +101,9 @@ public class UmsAdminController {
         data.put("menus", roleService.getMenuList(umsAdmin.getId()));
         data.put("icon", umsAdmin.getIcon());
         List<UmsRole> roleList = adminService.getRoleList(umsAdmin.getId());
-        if (CollUtil.isNotEmpty(roleList)) {
+        if(CollUtil.isNotEmpty(roleList)){
             List<String> roles = roleList.stream().map(UmsRole::getName).collect(Collectors.toList());
-            data.put("role", roles);
+            data.put("roles",roles);
         }
         return CommonResult.success(data);
     }
