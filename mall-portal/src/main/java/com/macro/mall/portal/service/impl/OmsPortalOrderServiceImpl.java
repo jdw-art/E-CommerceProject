@@ -346,7 +346,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
 
     @Override
     public CommonPage<OmsOrderDetail> list(Integer status, Integer pageNum, Integer pageSize) {
-        if (status == 1) {
+        if (status == -1) {
             status = null;
         }
         UmsMember member = memberService.getCurrentMember();
