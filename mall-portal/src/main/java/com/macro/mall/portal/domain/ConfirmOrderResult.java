@@ -20,7 +20,7 @@ import java.util.List;
 public class ConfirmOrderResult {
     @ApiModelProperty("包含优惠信息的购物车信息")
     private List<CartPromotionItem> cartPromotionItemList;
-    @ApiModelProperty("用户收获地址列表")
+    @ApiModelProperty("用户收货地址列表")
     private List<UmsMemberReceiveAddress> memberReceiveAddressList;
     @ApiModelProperty("用户可用优惠券列表")
     private List<SmsCouponHistoryDetail> couponHistoryDetailList;
