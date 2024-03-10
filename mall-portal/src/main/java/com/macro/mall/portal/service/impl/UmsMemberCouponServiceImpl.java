@@ -197,7 +197,7 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
         }
         // 所有优惠券
         SmsCouponExample couponExample = new SmsCouponExample();
-        couponExample.createCriteria()
+        couponExample.createCriteria().andEndTimeGreaterThan(new Date())
                 .andStartTimeLessThan(new Date())
                 .andUseTypeEqualTo(0);
         if (CollUtil.isNotEmpty(allCouponIds)) {
