@@ -30,5 +30,5 @@ public interface MemberBrandAttentionRepository extends MongoRepository<MemberBr
     /**
      * 根据会员ID删除记录
      */
-    int deleteAllByMemberId(Long memberId);
+    void deleteAllByMemberId(Long memberId);
 }
