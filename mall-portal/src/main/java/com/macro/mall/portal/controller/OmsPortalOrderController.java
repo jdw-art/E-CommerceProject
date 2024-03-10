@@ -68,7 +68,7 @@ public class OmsPortalOrderController {
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult cancelOrder(Long orderId) {
-        portalOrderService.cancelOrder(orderId);
+        portalOrderService.sendDelayMessageCancelOrder(orderId);
         return CommonResult.success(null);
     }
 
