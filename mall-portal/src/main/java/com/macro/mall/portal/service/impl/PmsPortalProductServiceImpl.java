@@ -91,6 +91,8 @@ public class PmsPortalProductServiceImpl implements PmsPortalProductService {
         result.setProduct(product);
         // 获取品牌信息
         PmsBrand brand = brandMapper.selectByPrimaryKey(product.getBrandId());
+        result.setBrand(brand);
+        // 获取商品属性信息
         PmsProductAttributeExample attributeExample = new PmsProductAttributeExample();
         attributeExample.createCriteria().andProductAttributeCategoryIdEqualTo(product.getProductAttributeCategoryId());
         List<PmsProductAttribute> productAttributeList = productAttributeMapper.selectByExample(attributeExample);
