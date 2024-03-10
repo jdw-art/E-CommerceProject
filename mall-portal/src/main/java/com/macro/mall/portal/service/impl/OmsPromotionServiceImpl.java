@@ -155,6 +155,7 @@ public class OmsPromotionServiceImpl implements OmsPromotionService {
         sb.append("满减优惠：");
         sb.append("满");
         sb.append(fullReduction.getFullPrice());
+        sb.append("元，");
         sb.append("减");
         sb.append(fullReduction.getReducePrice());
         sb.append("元");
