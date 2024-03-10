@@ -72,7 +72,7 @@ public class HomeController {
     @ResponseBody
     public CommonResult<List<PmsProduct>> hotProductList(@RequestParam(value = "pageSize", defaultValue = "6") Integer pageSize,
                                                          @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
-        List<PmsProduct> productList = homeService.hotProductList(pageSize, pageNum);
+        List<PmsProduct> productList = homeService.hotProductList(pageNum, pageSize);
         return CommonResult.success(productList);
     }
 
@@ -81,7 +81,7 @@ public class HomeController {
     @ResponseBody
     public CommonResult<List<PmsProduct>> newProductList(@RequestParam(value = "pageSize", defaultValue = "6") Integer pageSize,
                                                          @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
-        List<PmsProduct> productList = homeService.newProductList(pageSize, pageNum);
+        List<PmsProduct> productList = homeService.newProductList(pageNum, pageSize);
         return CommonResult.success(productList);
     }
 
