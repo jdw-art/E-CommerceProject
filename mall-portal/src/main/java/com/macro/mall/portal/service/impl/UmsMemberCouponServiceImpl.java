@@ -202,9 +202,9 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
                 .andUseTypeEqualTo(0);
         if (CollUtil.isNotEmpty(allCouponIds)) {
             couponExample.or(couponExample.createCriteria()
-            .andEnableTimeGreaterThan(new Date())
+            .andEndTimeGreaterThan(new Date())
             .andStartTimeLessThan(new Date())
-            .andUseTypeEqualTo(0)
+            .andUseTypeNotEqualTo(0)
             .andIdIn(allCouponIds));
         }
         return couponMapper.selectByExample(couponExample);
@@ -219,8 +219,8 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
     private BigDecimal calcTotalAmount(List<CartPromotionItem> cartItemList) {
         BigDecimal total = new BigDecimal("0");
         for (CartPromotionItem item : cartItemList) {
-            BigDecimal realprice = item.getPrice().subtract(item.getReduceAmount());
-            total = total.add(realprice.multiply(new BigDecimal(item.getQuantity())));
+            BigDecimal realPrice = item.getPrice().subtract(item.getReduceAmount());
+            total = total.add(realPrice.multiply(new BigDecimal(item.getQuantity())));
         }
         return total;
     }
