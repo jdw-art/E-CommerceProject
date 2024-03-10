@@ -30,7 +30,7 @@ public class OmsCartItemController {
     @Autowired
     private OmsCartItemService cartItemService;
     @Autowired
-    public UmsMemberService memberService;
+    private UmsMemberService memberService;
 
     @ApiOperation(value = "添加商品到购物车")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
