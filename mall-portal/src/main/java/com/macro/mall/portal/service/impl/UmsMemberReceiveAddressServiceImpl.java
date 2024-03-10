@@ -43,6 +43,7 @@ public class UmsMemberReceiveAddressServiceImpl implements UmsMemberReceiveAddre
 
     @Override
     public int update(Long id, UmsMemberReceiveAddress address) {
+        address.setId(null);
         UmsMember currentMember = memberService.getCurrentMember();
         UmsMemberReceiveAddressExample example = new UmsMemberReceiveAddressExample();
         example.createCriteria().andMemberIdEqualTo(currentMember.getId()).andIdEqualTo(id);
