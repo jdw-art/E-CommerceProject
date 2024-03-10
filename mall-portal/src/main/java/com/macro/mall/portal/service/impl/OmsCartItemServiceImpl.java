@@ -44,6 +44,7 @@ public class OmsCartItemServiceImpl implements OmsCartItemService {
         UmsMember currentMember = memberService.getCurrentMember();
         cartItem.setMemberId(currentMember.getId());
         cartItem.setMemberNickname(currentMember.getNickname());
+        cartItem.setDeleteStatus(0);
         OmsCartItem existCartItem = getCartItem(cartItem);
         if (existCartItem == null) {
             cartItem.setCreateDate(new Date());
