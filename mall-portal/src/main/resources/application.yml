@@ -2,7 +2,7 @@ spring:
   application:
     name: mall-portal
   profiles:
-    active: dev #默认为开发环境
+    active: dev #默锟斤拷为锟斤拷锟斤拷锟斤拷锟斤拷
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -13,14 +13,14 @@ mybatis:
     - classpath*:com/**/mapper/*.xml
 
 jwt:
-  tokenHeader: Authorization #JWT存储的请求头
-  secret: mall-portal-secret #JWT加解密使用的密钥
-  expiration: 604800 #JWT的超期限时间(60*60*24*7)
-  tokenHead: 'Bearer '  #JWT负载中拿到开头
+  tokenHeader: Authorization #JWT锟芥储锟斤拷锟斤拷锟斤拷头
+  secret: mall-portal-secret #JWT锟接斤拷锟斤拷使锟矫碉拷锟斤拷钥
+  expiration: 604800 #JWT锟侥筹拷锟斤拷锟斤拷时锟斤拷(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT锟斤拷锟斤拷锟斤拷锟矫碉拷锟斤拷头
 
 secure:
   ignored:
-    urls: #安全路径白名单
+    urls: #锟斤拷全路锟斤拷锟斤拷锟斤拷锟斤拷
       - /swagger-ui/
       - /swagger-resources/**
       - /**/v2/api-docs
@@ -37,7 +37,7 @@ secure:
       - /product/**
       - /brand/**
 
-# 自定义redis key
+# 锟皆讹拷锟斤拷redis key
 redis:
   database: mall
   key:
@@ -45,14 +45,14 @@ redis:
     orderId: 'oms:orderId'
     member: 'ums:member'
   expire:
-    authCode: 90 # 验证码超期时间
+    authCode: 90 # 锟斤拷证锟诫超锟斤拷时锟斤拷
     common: 86400 # 24小时
 
 mongo:
   insert:
-    sqlEnable: true # 用于控制是否通过数据库数据来插入mongo
+    sqlEnable: true # 锟斤拷锟节匡拷锟斤拷锟角凤拷通锟斤拷锟斤拷锟捷匡拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷mongo
 
-# 消息队列定义
+# 锟斤拷息锟斤拷锟叫讹拷锟斤拷
 rabbitmq:
   queue:
     name:
