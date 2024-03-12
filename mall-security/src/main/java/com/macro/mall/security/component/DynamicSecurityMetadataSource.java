@@ -21,6 +21,9 @@ public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMe
     @Autowired
     private DynamicSecurityService dynamicSecurityService;
 
+
+
+
     @PostConstruct
     public void loadDataSource() {
         configAttributeMap = dynamicSecurityService.loadDataSource();
