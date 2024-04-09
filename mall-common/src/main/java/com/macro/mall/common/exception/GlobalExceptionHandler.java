@@ -58,6 +58,8 @@ public class GlobalExceptionHandler {
         return CommonResult.validateFailed(message);
     }
 
+    @ResponseBody
+    @ExceptionHandler(value = SQLSyntaxErrorException.class)
     public CommonResult handleSQLSyntaxErrorException(SQLSyntaxErrorException e) {
         String message = e.getMessage();
         if (StrUtil.isNotEmpty(message) && message.contains("denied")) {
